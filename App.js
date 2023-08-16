@@ -1,20 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import logo from './logo.svg';
+import './App.css';
+import React, {useEffect, useState} from 'react';
+import {Text, View} from 'react-native';
+import axios from "axios";
+import NumberList from './components/NumberList.js';
 
-export default function App() {
+
+function App() {
+
+  const [phoneNumbers, setNumbers] = useState([])
+  const [userId, setId] = useState(1)
+  const API = "http://127.0.0.1:5000/"
+
+  const addNumber = (newNumberData) => {
+    axios
+      .post(`${API}/number/${userId}/`, newNumberData)
+      .then((result) => {
+        getAllNumbers(userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const getAllNumbers = () => {
+    axios
+      .get(`${API}/number/account/${userId}/`)
+      .then((result) => {
+        setNumbers(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const deleteNumber = (number_id) => {
+    axios
+      .delete(`${API}/number/${number_id}`)
+      .then((result) => {
+        getAllNumbers();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  useEffect(() => {
+    getAllNumbers();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <NumberList numbers={phoneNumbers} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

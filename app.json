@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "safety-triggered-text-frontend",
-    "slug": "safety-triggered-text-frontend",
+    "slug": "safety-triggered-text",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c8f6e15b-76c4-49a7-b1fc-854bd632f9f7"
+      }
+    },
+    "owner": "qicarolyn"
   }
 }
